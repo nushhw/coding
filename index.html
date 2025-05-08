@@ -12,22 +12,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
     }
-
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       background: white;
       padding: 30px;
       margin: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
     .hidden {
       display: none;
     }
-
     textarea {
       width: 100%;
       height: 300px;
@@ -37,7 +33,6 @@
       padding: 10px;
       font-size: 14px;
     }
-
     .popup {
       position: fixed;
       top: 50%;
@@ -51,7 +46,6 @@
       text-align: center;
       z-index: 1000;
     }
-
     button {
       padding: 12px 25px;
       font-size: 16px;
@@ -62,25 +56,47 @@
       border: none;
       border-radius: 5px;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     select {
       margin-top: 10px;
       font-size: 16px;
     }
-
     .center {
       display: flex;
       justify-content: center;
+    }
+    .editor-layout {
+      display: flex;
+      gap: 20px;
+    }
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #compiler {
+      background: #1e1e1e;
+      color: #e74c3c;
+      font-family: monospace;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-size: 14px;
+      border: 1px solid #444;
+    }
+    #result {
+      color: red;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-<!-- Lobby Screen -->
 <div class="container" id="lobby">
   <h1>VibeAgents Developer Interview</h1>
   <p>Thank you for applying for the Developer position at VibeAgents. To proceed, please complete this short assessment within 1 minute.</p>
@@ -89,7 +105,6 @@
   </div>
 </div>
 
-<!-- Question Screen -->
 <div class="container hidden" id="question">
   <h2>Coding Question</h2>
   <p>
@@ -117,7 +132,6 @@
   </div>
 </div>
 
-<!-- Code Editor Screen -->
 <div class="container hidden" id="editor">
   <h2>Code Editor</h2>
   <label>Choose Language:
@@ -129,20 +143,28 @@
       <option>Whitespace</option>
     </select>
   </label><br><br>
-  <textarea id="codeArea" placeholder="// Write your code here..."></textarea><br>
-  <div class="center">
-    <button disabled>Submit Solution</button>
+
+  <div class="editor-layout">
+    <div class="panel">
+      <textarea id="codeArea" placeholder="// Write your code here..."></textarea>
+      <div class="center">
+        <button id="submitBtn" onclick="submitCode()">Submit Solution</button>
+      </div>
+      <div id="result"></div>
+    </div>
+    <div class="panel">
+      <h4>Compiler Output</h4>
+      <div id="compiler">// waiting for submission...</div>
+    </div>
   </div>
 </div>
 
-<!-- Time's Up Popup -->
 <div class="popup" id="timeout">
   <h2>Time's Up!</h2>
   <p>1 minute is up – thank you for your interest but you clearly can't code.</p>
   <button onclick="disqualify()">Close</button>
 </div>
 
-<!-- Rejection Page -->
 <div class="container hidden" id="disqualified">
   <h2>Interview Result</h2>
   <p>Thank you for attempting the VibeAgents technical interview.</p>
@@ -160,17 +182,28 @@
     document.getElementById('question').classList.add('hidden');
     document.getElementById('editor').classList.remove('hidden');
 
-    // Start 1-minute timer
     setTimeout(() => {
       document.getElementById('codeArea').disabled = true;
+      document.getElementById('submitBtn').disabled = true;
       document.getElementById('timeout').style.display = 'block';
-    }, 60000);
+    }, 60000); // 60s
   }
 
   function disqualify() {
     document.getElementById('timeout').style.display = 'none';
     document.getElementById('editor').classList.add('hidden');
     document.getElementById('disqualified').classList.remove('hidden');
+  }
+
+  function submitCode() {
+    document.getElementById('result').innerText = "Result: Wrong Answer (WA)";
+    document.getElementById('compiler').innerText =
+      "Compiling...\n" +
+      "Checking test case 1...\n" +
+      "Expected: Hello World\n" +
+      "Received: \n" +
+      "Verdict: WA on test case 1\n\n" +
+      "0/1 test cases passed.";
   }
 </script>
 
