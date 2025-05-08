@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VibeAgents Programming Assessment</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    .container { max-width: 800px; margin: auto; }
+    .hidden { display: none; }
+    textarea { width: 100%; height: 300px; background: #1e1e1e; color: white; font-family: monospace; padding: 10px; }
+    .popup {
+      position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%);
+      background: white; padding: 30px; border: 2px solid red; box-shadow: 0 0 20px #000;
+      display: none; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="lobby">
+    <h1>VibeAgents Programming Assessment</h1>
+    <p>Welcome to our online assessment. This is designed to evaluate your coding skills and problem-solving abilities.</p>
+    <p>You have <strong>1:00</strong> to complete the assessment.</p>
+    <button onclick="startAssessment()">Start Assessment</button>
+  </div>
+
+  <div class="container hidden" id="assessment">
+    <h2>Problem: Magic Strings</h2>
+    <p>
+      Implement a program that processes string operations...<br>
+      <em>Example: a = "hello", b = "world", c = a + b, c[5:10] → output "world"</em>
+    </p>
+
+    <label>Language:
+      <select id="language">
+        <option>Assembly (x86 NASM)</option>
+        <option>Assembly (x86 AT&T GAS)</option>
+        <option>Assembly (ARM64 AArch64)</option>
+        <option>Brainf*ck</option>
+        <option>Whitespace</option>
+      </select>
+    </label><br><br>
+
+    <textarea placeholder="// your code here"></textarea><br>
+    <button>Submit Solution</button>
+  </div>
+
+  <div class="popup" id="timeout">
+    <h2>Time's Up!</h2>
+    <p>1 minute is up – thank you for your interest but you clearly can't code.</p>
+    <button onclick="location.reload()">Close</button>
+  </div>
+
+  <script>
+    function startAssessment() {
+      document.getElementById('lobby').classList.add('hidden');
+      document.getElementById('assessment').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('timeout').style.display = 'block';
+      }, 60000); // 60 seconds
+    }
+  </script>
+</body>
+</html>
