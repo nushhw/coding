@@ -14,16 +14,19 @@
       align-items: center;
       min-height: 100vh;
     }
+
     .container {
-      max-width: 1000px;
+      max-width: 1100px;
       background: white;
       padding: 30px;
       margin: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     .hidden {
       display: none;
     }
+
     textarea {
       width: 100%;
       height: 300px;
@@ -32,7 +35,9 @@
       font-family: monospace;
       padding: 10px;
       font-size: 14px;
+      resize: none;
     }
+
     .popup {
       position: fixed;
       top: 50%;
@@ -46,6 +51,7 @@
       text-align: center;
       z-index: 1000;
     }
+
     button {
       padding: 12px 25px;
       font-size: 16px;
@@ -56,26 +62,39 @@
       border: none;
       border-radius: 5px;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     select {
       margin-top: 10px;
       font-size: 16px;
     }
+
     .center {
       display: flex;
       justify-content: center;
     }
+
     .editor-layout {
       display: flex;
       gap: 20px;
+      margin-top: 20px;
     }
-    .panel {
+
+    .editor-panel {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .compiler-panel {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
+
     #compiler {
       background: #1e1e1e;
       color: #e74c3c;
@@ -87,11 +106,16 @@
       font-size: 14px;
       border: 1px solid #444;
     }
+
     #result {
       color: red;
       font-weight: bold;
       font-size: 18px;
       margin-top: 10px;
+    }
+
+    h4 {
+      margin-bottom: 5px;
     }
   </style>
 </head>
@@ -142,17 +166,18 @@
       <option>Brainf*ck</option>
       <option>Whitespace</option>
     </select>
-  </label><br><br>
+  </label>
 
   <div class="editor-layout">
-    <div class="panel">
+    <div class="editor-panel">
       <textarea id="codeArea" placeholder="// Write your code here..."></textarea>
       <div class="center">
         <button id="submitBtn" onclick="submitCode()">Submit Solution</button>
       </div>
       <div id="result"></div>
     </div>
-    <div class="panel">
+
+    <div class="compiler-panel">
       <h4>Compiler Output</h4>
       <div id="compiler">// waiting for submission...</div>
     </div>
@@ -182,11 +207,12 @@
     document.getElementById('question').classList.add('hidden');
     document.getElementById('editor').classList.remove('hidden');
 
+    // Start 1-minute timer
     setTimeout(() => {
       document.getElementById('codeArea').disabled = true;
       document.getElementById('submitBtn').disabled = true;
       document.getElementById('timeout').style.display = 'block';
-    }, 60000); // 60s
+    }, 30000);
   }
 
   function disqualify() {
